@@ -10,7 +10,7 @@ metadata:
 spec:
   containers:
     - name: {{ .Values.deployment.name }}
-      image: {{ .Values.deployment.image }}:{{ .values.deployment.tag }}
+      image: {{ .Values.deployment.image }}:{{ .Values.deployment.tag }}
       args:
         - ncc-host: {{ .Values.deployment.ncc-host }}
           account: {{ .Values.deployment.account }}
@@ -26,14 +26,14 @@ spec:
       securityContext:
         privileged: true
       volumeMounts:
-        - name: nfs-config-volume
+        - name: test1
           mountPath: /config
-        - name: nfs-config-volume
+        - name: test2
           mountPath: /var/run/netns
   volumes:
-    - name: nfs-config-volume
+    - name: test1
       persistentVolumeClaim:
         claimName: {{ .Values.deployment.name }}-pvc1
-    - name: nfs-config-volume
+    - name: test2
       persistentVolumeClaim:
         claimName: {{ .Values.deployment.name }}-pvc2
