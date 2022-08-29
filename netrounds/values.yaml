@@ -1,0 +1,25 @@
+Pod:
+  name: agent1
+  labels: 
+   app: agent-1
+spec:
+  containers:
+    - name: agent1
+      image: netrounds/test-agent-application
+      args:
+        ncc-host: 192.168.5.2
+        account: verizon
+        email: anand.shanmuganathan@one.verizon.com
+        password: January123$
+        name: TA_Cont6
+
+macvlan:
+  name: test-network-106
+  namespace: pradeep
+  ipamConfig:
+    addresses:
+      address: 192.168.5.6/2
+      gateway: 192.168.5.2
+    routes:
+      destination: 0.0.0.0/0
+      gateway: 192.168.5.2
