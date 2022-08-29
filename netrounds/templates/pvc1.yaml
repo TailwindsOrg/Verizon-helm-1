@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: test1
+  name: {{ .Values.deployment.name }}-pvc1
 spec:
   accessModes:
     - ReadWriteMany
@@ -9,4 +9,4 @@ spec:
     requests:
       storage: 100Mi
   volumeName: test1
-  storageClassName: nfs-storagee
+  storageClassName: nfs-storage

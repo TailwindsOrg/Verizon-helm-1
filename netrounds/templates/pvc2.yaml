@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: test2
+  name: {{ .Values.deployment.name }}-pvc2
 spec:
   accessModes:
     - ReadWriteMany
