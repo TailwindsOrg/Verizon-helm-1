@@ -1,4 +1,4 @@
-Pod:
+deployment:
   name: agent1
   labels: 
    app: agent-1
@@ -6,6 +6,7 @@ spec:
   containers:
     - name: agent1
       image: netrounds/test-agent-application
+      tag: latest
       args:
         ncc-host: 192.168.5.2
         account: verizon
