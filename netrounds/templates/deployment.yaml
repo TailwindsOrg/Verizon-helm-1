@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+  labels:
+    app: {{ .Values.deployment.name }}
+  annotations:
+        k8s.v1.cni.cncf.io/networks: {{ .Values.mac-vlan.name }}
+  namespace: {{ .Values.mac-vlan.namespace }}
+spec:
+  containers:
+    - name: {{ .Values.deployment.name }}
+      image: {{ .Values.deployment.image }}:{{ .values.deployment.tag }}
+      args:
+        - ncc-host: {{ .Values.deployment.ncc-host }}
+          account: {{ .Values.deployment.account }}
+          email: {{ .Values.deployment.email }}
+          password: {{ .Values.deployment.password }}
+          name: {{ .Values.deployment.name }}
+      command:
+            - /paa-test-agent-application/paa-test-agent-application
+      env:
+            - name: PATH
+              value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      ports:
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - name: nfs-config-volume
+          mountPath: /config
+        - name: nfs-config-volume
+          mountPath: /var/run/netns
+  volumes:
+    - name: nfs-config-volume
+      persistentVolumeClaim:
+        claimName: {{ .Values.deployment.name }}-pvc1
+    - name: nfs-config-volume
+      persistentVolumeClaim:
+        claimName: {{ .Values.deployment.name }}-pvc2
