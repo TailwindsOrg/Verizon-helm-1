@@ -5,18 +5,22 @@ metadata:
   labels:
     app: {{ .Values.deployment.name }}
   annotations:
-        k8s.v1.cni.cncf.io/networks: {{ .Values.mac-vlan.name }}
-  namespace: {{ .Values.mac-vlan.namespace }}
+        k8s.v1.cni.cncf.io/networks: {{ .Values.macvlan.name }}
+  namespace: {{ .Values.macvlan.namespace }}
 spec:
   containers:
-    - name: {{ .Values.deployment.name }}
-      image: {{ .Values.deployment.image }}:{{ .values.deployment.tag }}
-      args:
-        - ncc-host: {{ .Values.deployment.ncc-host }}
-          account: {{ .Values.deployment.account }}
-          email: {{ .Values.deployment.email }}
-          password: {{ .Values.deployment.password }}
-          name: {{ .Values.deployment.name }}
+      name: {{ .Values.deployment.name }}
+      image: "{{ .Values.deployment.image }}:{{ .Values.deployment.tag }}"
+      args: [
+        register-run,
+        config: {{ .Values.deployment.args.config}},
+        -A,
+        --ssl-no-check,
+        ncc-host: {{ index .Values.deployment "ncc-host" }},
+        account: {{ .Values.deployment.account }},
+        email: {{ .Values.deployment.email }},
+        password: {{ .Values.deployment.password }},
+        name: {{ .Values.deployment.name }} ]
       command:
             - /paa-test-agent-application/paa-test-agent-application
       env:

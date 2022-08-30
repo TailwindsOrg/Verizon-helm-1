@@ -2,17 +2,15 @@ deployment:
   name: agent1
   labels: 
    app: agent-1
-spec:
-  containers:
-    - name: agent1
-      image: netrounds/test-agent-application
-      tag: latest
-      args:
-        ncc-host: 192.168.5.2
-        account: verizon
-        email: anand.shanmuganathan@one.verizon.com
-        password: January123$
-        name: TA_Cont6
+   image: netrounds/test-agent-application
+   tag: latest
+   args:
+     config: /config/agent.conf
+     ncchost: 192.168.5.2
+     account: verizon
+     email: anand.shanmuganathan@one.verizon.com
+     password: January123$
+     name: TA_Cont6
 
 macvlan:
   name: test-network-106
